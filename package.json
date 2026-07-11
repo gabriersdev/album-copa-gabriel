@@ -1,0 +1,27 @@
+{
+  "name": "ifmg-hub",
+  "version": "1.0.0",
+  "description": "Exercícios e práticas do curso.",
+  "main": "srcipts/index.js",
+  "type": "module",
+  "scripts": {
+    "output": "node scripts/generate-zip-for-exercise",
+    "output:ex08": "node scripts/generate-zip-for-exercise exercise08",
+    "compile:java": "javac src/*.java",
+    "test": "npm run compile:java && java -cp src Testing",
+    "clean": "node scripts/clean-class-files.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabriersdev/ifmg-hub.git"
+  },
+  "author": "gabriersdev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabriersdev/ifmg-hub/issues"
+  },
+  "homepage": "https://github.com/gabriersdev/ifmg-hub#readme",
+  "devDependencies": {
+    "adm-zip": "^0.5.17"
+  }
+}
