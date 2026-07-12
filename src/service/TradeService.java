@@ -5,7 +5,6 @@ import model.Album;
 import model.Team;
 
 public class TradeService {
-
     public void compareAlbums(Album album1, Album album2) {
         if (album1.getNumPlayersPerTeam() != album2.getNumPlayersPerTeam()) {
             throw new InvalidAlbumDimensionException("Número de jogadores é diferente em cada álbum");
@@ -22,7 +21,7 @@ public class TradeService {
 
             if (team2 != null) {
                 System.out.println(team1.getName().toUpperCase());
-                
+
                 int numPlayers = album1.getNumPlayersPerTeam();
                 for (int k = 0; k < numPlayers; k++) {
                     if (team1.getSticker(k).isMissing() && team2.getSticker(k).hasRepeated()) {
@@ -41,13 +40,9 @@ public class TradeService {
                 }
             }
 
-            if (newline) {
-                System.out.print("\n");
-            }
+            if (newline) System.out.print("\n");
         }
 
-        if (count == 0) {
-            System.out.printf("Não há o que comparar...%n%n%n");
-        }
+        if (count == 0) System.out.printf("Não há o que comparar...%n%n%n");
     }
 }

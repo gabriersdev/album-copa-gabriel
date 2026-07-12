@@ -3,7 +3,9 @@ package repository;
 import model.Album;
 import model.Team;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class AlbumRepository {
@@ -32,6 +34,34 @@ public class AlbumRepository {
             }
 
             return album;
+        }
+    }
+
+    public void saveToFile(Album album, String filePath) throws IOException {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+            int rows = album.getNumTeams();
+            int cols = album.getNumPlayersPerTeam();
+            
+            bw.write(rows + " " + cols);
+            bw.newLine();
+            
+            for (int i = 0; i < rows; i++) {
+                bw.write(album.getTeam(i).getName());
+                bw.newLine();
+            }
+            
+            for (int i = 0; i < rows; i++) {
+                Team team = album.getTeam(i);
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < cols; j++) {
+                    sb.append(team.getSticker(j).getQuantity());
+                    if (j < cols - 1) {
+                        sb.append(" ");
+                    }
+                }
+                bw.write(sb.toString());
+                bw.newLine();
+            }
         }
     }
 }

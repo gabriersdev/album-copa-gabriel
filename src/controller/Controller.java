@@ -10,6 +10,7 @@ import utils.Util;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+// TODO - quebrar este arquivo em outros, para distribuir melhor a responsabilidade dos métodos, reduzir a repetição de código e concentrar aqui regras de negócio
 public class Controller {
     static Album album1 = null;
     static Album album2 = null;
@@ -46,10 +47,10 @@ public class Controller {
 
     public static void inputData(int id) {
         System.out.print("Quantas seleções há? ");
-        int teamsCount = Util.readPositiveInteger("\n||| Insira apenas números, tente novamente: ", "\n||| Insira valores positivos apenas: |||\n");
+        int teamsCount = Util.readPositiveInteger("\nInsira apenas números, tente novamente: ", "\nInsira valores positivos apenas:\n");
 
         System.out.print("Quantos jogadores há em cada? ");
-        int playersPerTeam = Util.readPositiveInteger("\n||| Insira apenas números, tente novamente: ", "\n||| Insira valores positivos apenas, tente novamente: |||\n");
+        int playersPerTeam = Util.readPositiveInteger("\nInsira apenas números, tente novamente: ", "\nInsira valores positivos apenas, tente novamente:\n");
 
         Album newAlbum = new Album(id);
         newAlbum.setNumPlayersPerTeam(playersPerTeam);
@@ -61,7 +62,7 @@ public class Controller {
 
             do {
                 if (newAlbum.hasTeam(teamName)) {
-                    System.out.printf("%n||| Seleção já cadastrada. Tente novamente: %n");
+                    System.out.printf("%nSeleção já cadastrada. Tente novamente: %n");
                     teamName = Util.inputScanner.next();
                 } else break;
             } while (true);
@@ -71,8 +72,8 @@ public class Controller {
             for (int j = 0; j < playersPerTeam; j++) {
                 System.out.printf("Quantidade de figurinhas do jogador %d da seleção %s? ", j + 1, teamName);
                 int quantity = Util.readPositiveInteger(
-                        String.format("%n||| Insira apenas números. Tente novamente: %n"),
-                        String.format("%n||| Insira apenas um valor positivo, tente novamente: %n")
+                        String.format("%nInsira apenas números. Tente novamente: %n"),
+                        String.format("%nInsira apenas um valor positivo, tente novamente: %n")
                 );
                 team.setStickerQuantity(j, quantity);
             }
@@ -95,7 +96,7 @@ public class Controller {
         do {
             if (team != null) break;
             else {
-                System.out.print("||| O time não existe no álbum, tente de novo: ");
+                System.out.print("O time não existe no álbum, tente de novo: ");
                 teamName = Util.inputScanner.next();
                 team = album.getTeam(teamName);
             }
@@ -103,8 +104,8 @@ public class Controller {
 
         System.out.print("Qual o número do jogador? ");
         int playerInput = Util.readIntegerInRange(
-                "||| Insira apenas números, tente de novo: ",
-                String.format("||| O numero máximo de jogador é %d, tente de novo: ", album.getNumPlayersPerTeam()),
+                "Insira apenas números, tente de novo: ",
+                String.format("O numero máximo de jogador é %d, tente de novo: ", album.getNumPlayersPerTeam()),
                 1, album.getNumPlayersPerTeam()
         );
 
@@ -112,17 +113,17 @@ public class Controller {
 
         if (isAddAction) {
             System.out.print("Quanto adicionar? ");
-            int amountToAdd = Util.readPositiveInteger("||| Insira apenas números: ", "||| Insira apenas números positivos: ");
+            int amountToAdd = Util.readPositiveInteger("Insira apenas números: ", "Insira apenas números positivos: ");
             team.addStickerQuantity(playerIndex, amountToAdd);
         } else {
             System.out.print("Quanto retirar? ");
             do {
-                int amountToRemove = Util.readPositiveInteger("||| Insira apenas números: ", "||| Insira apenas números positivos: ");
+                int amountToRemove = Util.readPositiveInteger("Insira apenas números: ", "Insira apenas números positivos: ");
                 try {
                     team.removeStickerQuantity(playerIndex, amountToRemove);
                     break;
                 } catch (RuntimeException e) {
-                    System.out.print("||| A quantidade de figurinhas não pode ser negativa. Tente novamente: ");
+                    System.out.print("A quantidade de figurinhas não pode ser negativa. Tente novamente: ");
                 }
             } while (true);
         }
@@ -133,8 +134,8 @@ public class Controller {
     public static int getDesiredOption() {
         System.out.print("Informe: ");
         return Util.readIntegerInRange(
-                "||| Erro! Insira apenas números, tente de novo: ",
-                "||| Valor digitado não está nas opções, tente de novo: ",
+                "Erro! Insira apenas números, tente de novo: ",
+                "Valor digitado não está nas opções, tente de novo: ",
                 0, 1
         );
     }
@@ -181,8 +182,8 @@ public class Controller {
         System.out.printf("%nDigite a opção: ");
 
         int option = Util.readIntegerInRange(
-                "||| Erro! Insira apenas números. Tente novamente: ",
-                "||| Valor digitado não está nas opções, tente novamente: ",
+                "Erro! Insira apenas números. Tente novamente: ",
+                "Valor digitado não está nas opções, tente novamente: ",
                 0, 5
         );
 
@@ -198,10 +199,10 @@ public class Controller {
             }
             case 4 -> {
                 if (album2 == null) {
-                    System.out.printf("%n||| O segundo álbum não foi cadastrado |||%n");
+                    System.out.printf("%nO segundo álbum não foi cadastrado%n");
                     nextStep();
                 } else if (album1.getNumPlayersPerTeam() != album2.getNumPlayersPerTeam()) {
-                    System.out.printf("%n||| Número de jogadores é diferentes em cada álbum |||%n");
+                    System.out.printf("%nNúmero de jogadores é diferentes em cada álbum%n");
                     nextStep();
                 } else {
                     tradeService.compareAlbums(album1, album2);
@@ -219,10 +220,10 @@ public class Controller {
                 "- [2] Álbum 2"
         }, 2);
 
-        int albumId = Util.readIntegerInRange("\n||| Erro! Insira apenas números, tente novamente: ", "\nO valor digitado não está nas opções. Tente novamente: ", 1, 2);
+        int albumId = Util.readIntegerInRange("\nErro! Insira apenas números, tente novamente: ", "\nO valor digitado não está nas opções. Tente novamente: ", 1, 2);
 
         if (albumId == 2 && album2 == null) {
-            System.out.printf("%n||| O Segundo álbum não foi cadastrado |||%n");
+            System.out.printf("%nO Segundo álbum não foi cadastrado.%n");
             nextStep();
             return;
         }

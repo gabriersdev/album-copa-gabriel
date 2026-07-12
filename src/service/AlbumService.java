@@ -5,7 +5,6 @@ import model.Team;
 import utils.Util;
 
 public class AlbumService {
-
     public void printSummary(Album album) {
         int total = 0;
         int numTeams = album.getNumTeams();
@@ -19,11 +18,10 @@ public class AlbumService {
 
         System.out.printf("Álbum %d: %d figurinhas %n[", album.getId(), total);
 
+        // Impressão agradável
         for (int i = 0; i < numTeams; i++) {
             System.out.printf("%d %s", totals[i], album.getTeam(i).getName());
-            if (i < numTeams - 1) {
-                System.out.print(" | ");
-            }
+            if (i < numTeams - 1) System.out.print(" | ");
         }
 
         System.out.print("]");
@@ -42,9 +40,8 @@ public class AlbumService {
             repeated += team.getRepeatedStickersCount();
         }
 
-        if (unique + repeated > 0) {
-            percentage = (int) ((double) (unique * 100) / (double) (unique + repeated));
-        }
+        // Define a percentagem
+        if (unique + repeated > 0) percentage = (int) ((double) (unique * 100) / (double) (unique + repeated));
 
         Util.printStringMatrix(new String[][]{
                 {"%nÁlbum %s%% concluído:%n", percentage + ""},
@@ -55,18 +52,16 @@ public class AlbumService {
         }, 3);
 
         System.out.printf("%-15s", "Seleção");
-        for (int j = 1; j <= cols; j++) {
-            System.out.printf("%sJ%-3d", " ", j);
-        }
+        for (int j = 1; j <= cols; j++) System.out.printf("%sJ%-3d", " ", j);
+
         System.out.println();
         System.out.println("-".repeat(15 + cols * 5));
 
+        // Impressão agradável
         for (int i = 0; i < numTeams; i++) {
             Team team = album.getTeam(i);
             System.out.printf("%-15s", team.getName());
-            for (int j = 0; j < cols; j++) {
-                System.out.printf("%s%-4d", " ", team.getSticker(j).getQuantity());
-            }
+            for (int j = 0; j < cols; j++) System.out.printf("%s%-4d", " ", team.getSticker(j).getQuantity());
             System.out.println();
         }
 
