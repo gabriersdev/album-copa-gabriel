@@ -39,6 +39,7 @@
               </span>
             </button>
             <ul class="dropdown-menu font-inter text-base">
+              <!-- Lista todas as seleções que tem em comum nos álbuns -->
               <li><a class="dropdown-item" href="#">Brasil</a></li>
               <li><a class="dropdown-item" href="#">Argentina</a></li>
               <li><a class="dropdown-item" href="#">França</a></li>
@@ -103,6 +104,7 @@
     </div>
     
     <div class="mt-3 d-flex flex-column gap-3">
+      <!--      TODO: adicionar propriedades a uma instancia de figurinha para que, apenas em determinada situacao a mensagem ou acao apareça e seja possivel clicar/selecionar para as 3 situações ofertadas a seguir -->
       <!-- Se ambos os álbuns possuírem a mesma figurinha -->
       <no-trade-message message="Os dois álbuns possuem esta carta. Não é possível trocá-la."></no-trade-message>
       
@@ -110,6 +112,7 @@
       <no-trade-message message="Nenhum dos álbuns possuem esta carta. Não é possível trocá-la."></no-trade-message>
       
       <!-- Oferece troca, já que 1 álbum tem a figurinha e o outro não -->
+      <!--      TODO: adicionar propriedades a uma instancia de figurinha para que, apenas em determinada situacao a mensagem em relacao a troca -->
       <div style="max-width: 300px" class="mx-auto">
         <div class="d-flex flex-column gap-1">
           <button type="button" class="btn btn-primary text-base font-inter">
@@ -123,6 +126,7 @@
             <span class="d-block">Troca feita com sucesso!</span>
             <span class="d-block">Ocorreu um erro ao fazer a troca! Tente novamente ou contate o administrador.</span>
           </button>
+          <!--          A mensagem é personalizada para dar um feedback ao usuário sobre a troca de carta -->
           <span class="text-small d-inline-block text-balance">O álbum X possui mais de uma desta carta, portanto é possível trocar com ele.</span>
         </div>
       </div>
@@ -167,8 +171,8 @@
           missing: 45,
           progress: 50,
           teams: [
-            { name: 'XYZ', progress: 85, missing: 3 },
-            { name: 'ABC', progress: 90, missing: 1 }
+            {name: 'XYZ', progress: 85, missing: 3},
+            {name: 'ABC', progress: 90, missing: 1}
           ]
         },
         album2: {
@@ -176,27 +180,27 @@
           missing: 12,
           progress: 80,
           teams: [
-            { name: 'XYZ', progress: 85, missing: 3 },
-            { name: 'ABC', progress: 90, missing: 1 }
+            {name: 'XYZ', progress: 85, missing: 3},
+            {name: 'ABC', progress: 90, missing: 1}
           ]
         },
         commonStickers: [
-          { number: 1, team: 'ABC' },
-          { number: 10, team: 'DEF' },
-          { number: 5, team: 'XYZ' }
+          {number: 1, team: 'ABC'},
+          {number: 10, team: 'DEF'},
+          {number: 5, team: 'XYZ'}
         ],
         possibleTrades: [
-          { number: 11, team: 'ABC', from: 'X', to: 'Y', requested: false },
-          { number: 5, team: 'XYZ', from: 'Y', to: 'X', requested: false }
+          {number: 11, team: 'ABC', from: 'X', to: 'Y', requested: false},
+          {number: 5, team: 'XYZ', from: 'Y', to: 'X', requested: false}
         ]
       };
     }
   });
-
+  
   modalApp.component('album-comparison-component', albumComparisonComponent);
   modalApp.component('common-stickers-component', commonStickersComponent);
   modalApp.component('possible-trades-component', possibleTradesComponent);
-
+  
   modalApp.mount('#modal-app');
 </script>
 

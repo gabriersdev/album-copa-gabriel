@@ -1,4 +1,3 @@
-
 const albumComparisonComponent = {
   props: ['album'],
   template: `
@@ -12,7 +11,7 @@ const albumComparisonComponent = {
         <div class="pt-1">
           <div>
             <ul>
-              <li v-for="team in album.teams">
+              <li v-for="team in album.teams" class="mb-1">
                 <span>Seleção {{ team.name }} - {{ team.progress }}% completa ({{ team.missing }} figurinhas faltantes).</span>
               </li>
             </ul>
@@ -35,7 +34,7 @@ const commonStickersComponent = {
                 <div class="pt-1">
                     <div>
                         <ul>
-                            <li v-for="sticker in commonStickers">
+                            <li v-for="sticker in commonStickers" class="mb-1">
                                 <span>Jogador #{{ sticker.number }} - Seleção {{ sticker.team }}.</span>
                             </li>
                         </ul>
@@ -58,10 +57,12 @@ const possibleTradesComponent = {
                 <div class="pt-1">
                     <div>
                         <ul>
-                            <li v-for="trade in trades">
+                            <li v-for="trade in trades" class="mb-1">
                                 <span>Jogador #{{ trade.number }} - Seleção {{ trade.team }} do Album {{ trade.from }} para o Album {{ trade.to }}.&nbsp;</span>
-<!--                                TODO: adicionar feedback ao usuário: se trade.requested, impossivel clicar no botão (usar cursor not-allowed e opacity alem de disabled) -->
-                                <button class="fw-normal text-small border-0 p-0 m-0 bg-transparent text-primary" @click="requestTrade(trade)">
+                                <button class="fw-normal text-small border-0 p-0 m-0 bg-transparent text-primary"
+                                        @click="requestTrade(trade)"
+                                        :disabled="trade.requested"
+                                        :class="{ 'cursor-not-allowed opacity-50': trade.requested }">
                                     <span v-if="!trade.requested" class="text-decoration-underline">Trocar</span>
                                     <span v-else>Troca solicitada. Aguarde...</span>
                                 </button>
