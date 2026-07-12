@@ -31,6 +31,7 @@
     *   Validar se os índices de seleção/jogador estão dentro dos limites da matriz.
     *   Verificar se os arquivos de entrada existem e se o formato está correto.
     *   Garantir que os dois álbuns a serem comparados tenham as mesmas dimensões.
+    *   Não deve ser possível trabalhar com álbuns em que as seleções tenham quantidades diferentes de jogadores, já que, possivelmente, se não se tratar de erro são de copas diferentes.
 
 ## Diagrama de Fluxo (Mermaid)
 

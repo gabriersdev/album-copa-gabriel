@@ -14,8 +14,8 @@ Este documento fornece diretrizes de codificação focadas em **Clean Code** e e
 - **Funções Pequenas e Coesas**: Um método deve ter uma única responsabilidade. Se um método exceder 20 linhas de código, extraia partes da lógica para métodos privados bem nomeados.
 - **Nomes Significativos**: Evite nomes genéricos ou abreviaturas como `m`, `n`, `data`, `arr`. Prefira nomes descritivos como `stickerStatusMatrix`, `totalTeams`, `stickersPerTeam`.
 - **Evite Magic Numbers**: Valores literais que controlam a lógica do domínio devem ser encapsulados em constantes ou `Enums`. Por exemplo:
-  - `public static final int STICKER_MISSING = 0;`
-  - `public static final int STICKER_OWNED = 1;`
+  - `public static final int STICKERiMISSING = 0;`
+  - `public static final int STICKERiOWNED = 1;`
 - **Reduza a Complexidade Ciclomática**:
   - Evite múltiplos níveis de aninhamento (ex: `for` dentro de `for` dentro de `if` profundo).
   - Use **Guard Clauses** (retorno antecipado) para tratar condições de erro ou limites no início do método, evitando blocos `else` longos.
