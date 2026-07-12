@@ -34,3 +34,6 @@ bin/
 
 # JS Scripts
 /node_modules/
+
+# Java compile files
+*.class

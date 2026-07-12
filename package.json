@@ -8,9 +8,9 @@
     "output": "node scripts/generate-zip-for-exercise",
     "output:ex08": "node scripts/generate-zip-for-exercise exercise08",
     "compile:java": "javac -sourcepath src src/Main.java src/Testing.java",
-    "compile:java:api": "javac -sourcepath src src/Main.java src/Testing.java src/server/ApiMain.java",
+    "compile:java:api": "javac -sourcepath src src/Main.java src/Testing.java src/ApiMain.java",
     "test": "npm run compile:java && java -cp src Testing",
-    "start:api": "npm run compile:java && java -cp src server.ApiMain",
+    "start:api": "npm run compile:java:api && java -cp src ApiMain",
     "clean": "node scripts/clean-class-files.js"
   },
   "repository": {

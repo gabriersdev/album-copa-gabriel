@@ -98,7 +98,7 @@ public class ApiHandler implements HttpHandler {
 
     // Para saber se a API está funcionando
     public String ping() {
-        return "Ping... Pong";
+        return "{\"message\": \"Ping... Pong\"}";
     }
 
     private String getInitialData(Album a1, Album a2) {
