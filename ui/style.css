@@ -90,7 +90,7 @@ a:hover {
  */
 .card-container {
     position: relative;
-    width: 320px;
+    width: 350px;
     height: 480px;
     background-color: #111;
     border-radius: 20px;
@@ -175,11 +175,12 @@ a:hover {
 
 /* Número Central Gigante */
 .card-center-number {
-    font-size: 16rem;
+    font-size: 15rem;
     font-weight: 300;
     line-height: 1;
     letter-spacing: -0.05em;
     display: flex;
+    text-align: center;
     align-items: center;
     justify-content: center;
     flex-grow: 1;
@@ -252,4 +253,9 @@ a:hover {
 
 .text-base {
     font-size: 16px !important;
+}
+
+summary::marker {
+    list-style-type: none;
+    content: "+ ";
 }
