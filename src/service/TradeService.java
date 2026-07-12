@@ -7,7 +7,7 @@ import model.Team;
 public class TradeService {
     public void compareAlbums(Album album1, Album album2) {
         if (album1.getNumPlayersPerTeam() != album2.getNumPlayersPerTeam()) {
-            throw new InvalidAlbumDimensionException("Número de jogadores é diferente em cada álbum");
+            throw new InvalidAlbumDimensionException("Número de jogadores é diferente em cada álbum.");
         }
 
         System.out.printf("%n >>> Comparação <<< %n");
@@ -28,11 +28,17 @@ public class TradeService {
                         System.out.printf("Você pode receber a figurinha do JOGADOR %d do outro álbum%n", k + 1);
                         count++;
                         newline = true;
-                    } else if (team1.getSticker(k).hasRepeated() && team2.getSticker(k).isMissing()) {
+                    }
+
+                    //
+                    else if (team1.getSticker(k).hasRepeated() && team2.getSticker(k).isMissing()) {
                         System.out.printf("Você pode dar a figurinha do JOGADOR %d pro outro álbum%n", k + 1);
                         count++;
                         newline = true;
-                    } else if (k == numPlayers - 1 && !newline) {
+                    }
+
+                    //
+                    else if (k == numPlayers - 1 && !newline) {
                         System.out.printf("Sem possibilidade de troca...%n");
                         count++;
                         newline = true;
@@ -40,7 +46,7 @@ public class TradeService {
                 }
             }
 
-            if (newline) System.out.print("\n");
+            if (newline) System.out.printf("%n");
         }
 
         if (count == 0) System.out.printf("Não há o que comparar...%n%n%n");

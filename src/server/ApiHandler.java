@@ -11,14 +11,15 @@ import utils.JsonBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 // TODO - quebrar este arquivo em outros, para distribuir melhor a responsabilidade dos métodos
 public class ApiHandler implements HttpHandler {
-    private AlbumRepository repository = new AlbumRepository();
-    private String file1 = "database/album-database-1.txt";
-    private String file2 = "database/album-database-2.txt";
+    private final AlbumRepository repository = new AlbumRepository();
+    private final String file1 = "database/album-database-1.txt";
+    private final String file2 = "database/album-database-2.txt";
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -39,30 +40,40 @@ public class ApiHandler implements HttpHandler {
             Album album1 = repository.loadFromFile(1, file1);
             Album album2 = repository.loadFromFile(2, file2);
 
-            String response = "";
+            String response;
 
             if ("GET".equalsIgnoreCase(method)) {
-                if ("/api/initial-data".equals(path)) {
-                    response = getInitialData(album1, album2);
-                } else if (path.startsWith("/api/selection/")) {
+                if ("/api/initial-data".equals(path)) response = getInitialData(album1, album2);
+
+                else if (path.startsWith("/api/selection/")) {
                     String selectionName = path.substring("/api/selection/".length());
                     response = getSelectionData(album1, album2, selectionName);
-                } else if ("/api/comparison".equals(path)) {
-                    response = getComparisonData(album1, album2);
-                } else {
+                }
+
+                //
+                else if ("/api/comparison".equals(path)) response = getComparisonData(album1, album2);
+                else if ("/api/ping".equals(path)) response = ping();
+
+                else {
                     sendError(exchange, 404, "Endpoint não encontrado.");
                     return;
                 }
-            } else if ("POST".equalsIgnoreCase(method) && "/api/trade".equals(path)) {
+            }
+
+            //
+            else if ("POST".equalsIgnoreCase(method) && "/api/trade".equals(path)) {
                 InputStream is = exchange.getRequestBody();
                 String body = new String(is.readAllBytes());
                 response = handleTrade(album1, album2, body);
-            } else {
+            }
+
+            //
+            else {
                 sendError(exchange, 405, "Método não permitido.");
                 return;
             }
 
-            byte[] bytes = response.getBytes("UTF-8");
+            byte[] bytes = response.getBytes(StandardCharsets.UTF_8);
             exchange.getResponseHeaders().add("Content-Type", "application/json; charset=UTF-8");
             exchange.sendResponseHeaders(200, bytes.length);
             OutputStream os = exchange.getResponseBody();
@@ -77,12 +88,17 @@ public class ApiHandler implements HttpHandler {
 
     private void sendError(HttpExchange exchange, int code, String msg) throws IOException {
         String json = "{\"error\": " + JsonBuilder.escape(msg) + "}";
-        byte[] bytes = json.getBytes("UTF-8");
+        byte[] bytes = json.getBytes(StandardCharsets.UTF_8);
         exchange.getResponseHeaders().add("Content-Type", "application/json; charset=UTF-8");
         exchange.sendResponseHeaders(code, bytes.length);
         OutputStream os = exchange.getResponseBody();
         os.write(bytes);
         os.close();
+    }
+
+    // Para saber se a API está funcionando
+    public String ping() {
+        return "Ping... Pong";
     }
 
     private String getInitialData(Album a1, Album a2) {
@@ -95,7 +111,7 @@ public class ApiHandler implements HttpHandler {
         }
         sb.append("\"selections\": ").append(JsonBuilder.stringListToJson(teamNames)).append(",");
 
-        String firstTeam = teamNames.isEmpty() ? "" : teamNames.get(0);
+        String firstTeam = teamNames.isEmpty() ? "" : teamNames.getFirst();
         sb.append("\"currentSelection\": ").append(JsonBuilder.escape(firstTeam)).append(",");
 
         sb.append("\"stickers\": ").append(getSelectionData(a1, a2, firstTeam));
@@ -258,7 +274,7 @@ public class ApiHandler implements HttpHandler {
         }
 
         Sticker sourceSticker = sourceTeam.getSticker(playerIndex);
-        Sticker destSticker = destTeam.getSticker(playerIndex);
+        // Sticker destSticker = destTeam.getSticker(playerIndex);
 
         if (!sourceSticker.hasRepeated()) {
             return "{\"success\": false, \"message\": \"Erro: A troca não pôde ser realizada. O álbum de origem não possui esta figurinha como duplicata.\"}";
@@ -273,6 +289,7 @@ public class ApiHandler implements HttpHandler {
         return "{\"success\": true, \"message\": \"Troca realizada com sucesso!\"}";
     }
 
+    // Faz a transformação de um JSON em String
     private String extractJsonValue(String json, String key) {
         String keyPattern = "\"" + key + "\"";
         int keyIdx = json.indexOf(keyPattern);
@@ -284,16 +301,14 @@ public class ApiHandler implements HttpHandler {
         int commaIdx = json.indexOf(",", colonIdx);
         int braceIdx = json.indexOf("}", colonIdx);
 
-        int endIdx = -1;
+        int endIdx;
         if (commaIdx != -1 && braceIdx != -1) endIdx = Math.min(commaIdx, braceIdx);
         else if (commaIdx != -1) endIdx = commaIdx;
         else if (braceIdx != -1) endIdx = braceIdx;
         else endIdx = json.length();
 
         String val = json.substring(colonIdx + 1, endIdx).trim();
-        if (val.startsWith("\"") && val.endsWith("\"") && val.length() >= 2) {
-            val = val.substring(1, val.length() - 1);
-        }
+        if (val.startsWith("\"") && val.endsWith("\"") && val.length() >= 2) val = val.substring(1, val.length() - 1);
         return val;
     }
 }

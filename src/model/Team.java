@@ -5,15 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Team {
-    private String name;
-    private List<Sticker> stickers;
+    private final String name;
+    private final List<Sticker> stickers;
 
     public Team(String name, int numPlayers) {
         this.name = name;
         this.stickers = new ArrayList<>(numPlayers);
-        for (int i = 0; i < numPlayers; i++) {
-            this.stickers.add(new Sticker(0));
-        }
+        for (int i = 0; i < numPlayers; i++) this.stickers.add(new Sticker(0));
     }
 
     public String getName() {
@@ -41,9 +39,7 @@ public class Team {
     }
 
     private void validateIndex(int index) {
-        if (index < 0 || index >= stickers.size()) {
-            throw new InvalidStickerIndexException("Índice do jogador inválido: " + index);
-        }
+        if (index < 0 || index >= stickers.size()) throw new InvalidStickerIndexException("Índice do jogador inválido: " + index);
     }
 
     public int getNumPlayers() {

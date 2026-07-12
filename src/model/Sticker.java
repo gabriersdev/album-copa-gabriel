@@ -9,9 +9,7 @@ public class Sticker {
     private int quantity;
 
     public Sticker(int initialQuantity) {
-        if (initialQuantity < 0) {
-            throw new IllegalArgumentException("Quantidade inicial não pode ser negativa.");
-        }
+        if (initialQuantity < 0) throw new IllegalArgumentException("Quantidade inicial não pode ser negativa.");
         this.quantity = initialQuantity;
     }
 
@@ -20,26 +18,18 @@ public class Sticker {
     }
 
     public void setQuantity(int quantity) {
-        if (quantity < 0) {
-            throw new IllegalArgumentException("Quantidade não pode ser negativa.");
-        }
+        if (quantity < 0) throw new IllegalArgumentException("Quantidade não pode ser negativa.");
         this.quantity = quantity;
     }
 
     public void addQuantity(int amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("Quantidade a adicionar não pode ser negativa.");
-        }
+        if (amount < 0) throw new IllegalArgumentException("Quantidade a adicionar não pode ser negativa.");
         this.quantity += amount;
     }
 
     public void removeQuantity(int amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("Quantidade a remover não pode ser negativa.");
-        }
-        if (this.quantity - amount < 0) {
-            throw new InvalidStickerIndexException("Quantidade de figurinhas não pode ser negativa.");
-        }
+        if (amount < 0) throw new IllegalArgumentException("Quantidade a remover não pode ser negativa.");
+        if (this.quantity - amount < 0) throw new InvalidStickerIndexException("Quantidade de figurinhas não pode ser negativa.");
         this.quantity -= amount;
     }
 

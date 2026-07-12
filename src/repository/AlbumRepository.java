@@ -2,6 +2,7 @@ package repository;
 
 import model.Album;
 import model.Team;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -41,15 +42,15 @@ public class AlbumRepository {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
             int rows = album.getNumTeams();
             int cols = album.getNumPlayersPerTeam();
-            
+
             bw.write(rows + " " + cols);
             bw.newLine();
-            
+
             for (int i = 0; i < rows; i++) {
                 bw.write(album.getTeam(i).getName());
                 bw.newLine();
             }
-            
+
             for (int i = 0; i < rows; i++) {
                 Team team = album.getTeam(i);
                 StringBuilder sb = new StringBuilder();

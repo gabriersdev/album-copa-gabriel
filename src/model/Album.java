@@ -40,9 +40,7 @@ public class Album {
     }
 
     public Team getTeam(int index) {
-        if (index >= 0 && index < teams.size()) {
-            return teams.get(index);
-        }
+        if (index >= 0 && index < teams.size()) return teams.get(index);
         return null;
     }
 
