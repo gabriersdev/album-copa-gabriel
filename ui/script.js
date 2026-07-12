@@ -121,6 +121,25 @@ function scrubTo(totalTime) { // moves the scroll position to the place that cor
 
 document.querySelector(".next").addEventListener("click", () => scrubTo(scrub.vars.totalTime + spacing));
 document.querySelector(".prev").addEventListener("click", () => scrubTo(scrub.vars.totalTime - spacing));
+document.querySelector(".info").addEventListener("click", () => {
+  Swal.fire({
+    title: 'Comparação de Álbuns',
+    html: `
+      <div class="text-start font-inter">
+        <p><strong>Seu Álbum:</strong> Faltam 45 figurinhas</p>
+        <p><strong>Álbum do Amigo:</strong> Faltam 12 figurinhas</p>
+        <p><strong>Figurinhas em comum:</strong> 15</p>
+        <p><strong>Possíveis trocas:</strong> 3</p>
+      </div>
+    `,
+    icon: 'info',
+    confirmButtonText: 'Fechar',
+    customClass: {
+      confirmButton: 'btn btn-primary font-inter'
+    },
+    buttonsStyling: false
+  });
+});
 
 
 function buildSeamlessLoop(items, spacing) {
