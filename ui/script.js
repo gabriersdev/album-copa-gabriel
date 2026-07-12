@@ -3,9 +3,9 @@ const API_BASE = 'http://localhost:4321/api';
 const app = Vue.createApp({
   data() {
     return {
-      apiConnected: null,
       selections: [],
       currentSelection: '',
+      searchQuery: '',
       cards: [],
       album1: { name: 'Álbum #1', missing: 0, progress: 0, teams: [] },
       album2: { name: 'Álbum #2', missing: 0, progress: 0, teams: [] },
@@ -21,13 +21,11 @@ const app = Vue.createApp({
       try {
         const response = await fetch(`${API_BASE}/initial-data`);
         const data = await response.json();
-        this.selections = data.selections;
+        this.selections = data.selections.sort();
         this.currentSelection = data.currentSelection;
         this.cards = this.mapCards(data.stickers);
-        this.apiConnected = true;
         this.reinitGsap();
       } catch (err) {
-        this.apiConnected = false;
         console.error("Erro ao carregar dados iniciais:", err);
       }
     },
@@ -39,8 +37,31 @@ const app = Vue.createApp({
         const stickers = await response.json();
         this.cards = this.mapCards(stickers);
         this.reinitGsap();
+        this.closeDropdown();
       } catch (err) {
         console.error("Erro ao carregar seleção:", err);
+      }
+    },
+    closeDropdown() {
+      const dropdownEl = document.querySelector('.dropdown-toggle');
+      if (dropdownEl) {
+        const dropdown = bootstrap.Dropdown.getInstance(dropdownEl);
+        if (dropdown) dropdown.hide();
+      }
+    },
+    searchSelection() {
+      const query = this.searchQuery.trim();
+      if (!query) {
+        Swal.fire('Atenção!', 'Digite o nome de uma seleção para pesquisar.', 'warning');
+        return;
+      }
+      
+      const found = this.selections.find(s => s.toLowerCase() === query.toLowerCase());
+      if (found) {
+        this.fetchSelection(found);
+        this.searchQuery = '';
+      } else {
+        Swal.fire('Erro!', 'Seleção não encontrada.', 'error');
       }
     },
     async fetchComparison() {
@@ -51,6 +72,7 @@ const app = Vue.createApp({
         this.album2 = data.album2;
         this.commonStickers = data.commonStickers;
         this.possibleTrades = data.possibleTrades;
+        console.log("Informações da comparação de álbuns:", data);
       } catch (err) {
         console.error("Erro ao carregar comparação:", err);
       }
@@ -128,7 +150,7 @@ app.component('gsap-card', {
       });
       // The parent will re-fetch data on success which will re-render,
       // but in case of error we can stop the spinner.
-      setTimeout(() => { this.isTrading = false; }, 2000); 
+      setTimeout(() => { this.isTrading = false; }, 2000);
     }
   },
   template: '#gsap-card-template'
@@ -141,7 +163,7 @@ app.component('possible-trades-component', possibleTradesComponent);
 // Montar a aplicação no DOM
 const vm = app.mount('#app');
 
-// Expose vm to global so the Info button outside the #app can trigger fetchComparison, 
+// Expose vm to global so the Info button outside the #app can trigger fetchComparison,
 // wait, we can just attach it in HTML or here.
 document.querySelector(".info").addEventListener("click", () => {
     vm.fetchComparison();
@@ -192,24 +214,24 @@ function initGsap() {
     pin: ".gallery"
   });
   
-  function wrapForward(trigger) { 
+  function wrapForward(trigger) {
     iteration++;
     trigger.wrapping = true;
     trigger.scroll(trigger.start + 1);
   }
 
-  function wrapBackward(trigger) { 
+  function wrapBackward(trigger) {
     iteration--;
-    if (iteration < 0) { 
+    if (iteration < 0) {
       iteration = 9;
       seamlessLoop.totalTime(seamlessLoop.totalTime() + seamlessLoop.duration() * 10);
-      scrub.pause(); 
+      scrub.pause();
     }
     trigger.wrapping = true;
     trigger.scroll(trigger.end - 1);
   }
 
-  window.scrubTo = function(totalTime) { 
+  window.scrubTo = function(totalTime) {
     let progress = (totalTime - seamlessLoop.duration() * iteration) / seamlessLoop.duration();
     if (progress > 1) wrapForward(trigger);
     else if (progress < 0) wrapBackward(trigger);
