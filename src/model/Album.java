@@ -1,4 +1,4 @@
-package components;
+package model;
 
 public class Album {
     //
