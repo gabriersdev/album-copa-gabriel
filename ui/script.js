@@ -23,8 +23,39 @@ const app = Vue.createApp({
         {number: '18', gradClass: 'grad-9'},
         {number: '19', gradClass: 'grad-10'},
         {number: '20', gradClass: 'grad-8'},
+        {number: '21', gradClass: 'grad-3'},
+        {number: '22', gradClass: 'grad-6'},
+        {number: '23', gradClass: 'grad-5'},
+        {number: '24', gradClass: 'grad-4'},
+      ],
+      album1: {
+        name: 'Álbum #1',
+        missing: 45,
+        progress: 50,
+        teams: [
+          {name: 'XYZ', progress: 85, missing: 3},
+          {name: 'ABC', progress: 90, missing: 1}
+        ]
+      },
+      album2: {
+        name: 'Álbum #2',
+        missing: 12,
+        progress: 80,
+        teams: [
+          {name: 'XYZ', progress: 85, missing: 3},
+          {name: 'ABC', progress: 90, missing: 1}
+        ]
+      },
+      commonStickers: [
+        {number: 1, team: 'ABC'},
+        {number: 10, team: 'DEF'},
+        {number: 5, team: 'XYZ'}
+      ],
+      possibleTrades: [
+        {number: 11, team: 'ABC', from: 'X', to: 'Y', requested: false},
+        {number: 5, team: 'XYZ', from: 'Y', to: 'X', requested: false}
       ]
-    }
+    };
   }
 });
 
@@ -54,8 +85,13 @@ app.component('gsap-card', {
   template: '#gsap-card-template'
 });
 
+app.component('album-comparison-component', albumComparisonComponent);
+app.component('common-stickers-component', commonStickersComponent);
+app.component('possible-trades-component', possibleTradesComponent);
+
 // Montar a aplicação no DOM
 app.mount('#app');
+app.mount('#modal-app');
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -109,14 +145,10 @@ function wrapBackward(trigger) { // when the ScrollTrigger reaches the start aga
 
 function scrubTo(totalTime) { // moves the scroll position to the place that corresponds to the totalTime value of the seamlessLoop, and wraps if necessary.
   let progress = (totalTime - seamlessLoop.duration() * iteration) / seamlessLoop.duration();
-  console.log(progress)
-  if (progress > 1) {
-    wrapForward(trigger);
-  } else if (progress < 0) {
-    wrapBackward(trigger);
-  } else {
-    trigger.scroll(trigger.start + progress * (trigger.end - trigger.start));
-  }
+  
+  if (progress > 1) wrapForward(trigger);
+  else if (progress < 0) wrapBackward(trigger);
+  else trigger.scroll(trigger.start + progress * (trigger.end - trigger.start));
 }
 
 document.querySelector(".next").addEventListener("click", () => scrubTo(scrub.vars.totalTime + spacing));

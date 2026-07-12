@@ -50,30 +50,32 @@
       </div>
     </hgroup>
   </div>
-  <ul class="cards" id="app">
-    <gsap-card
-      v-for="(card, index) in cards"
-      :key="index"
-      :number="card.number"
-      :gradient-class="card.gradClass">
-    </gsap-card>
-  </ul>
-  <div class="actions d-flex justify-content-center align-items-center gap-2 font-inter">
-    <button class="prev">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fast-forward-fill" style="rotate: 180deg" viewBox="0 0 16 16">
-        <path d="M7.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C.713 12.69 0 12.345 0 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
-        <path d="M15.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C8.713 12.69 8 12.345 8 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
-      </svg>
-      <span>&nbsp;Anterior</span>
-    </button>
-    <button class="info" data-bs-toggle="modal" data-bs-target="#infoModal">Info</button>
-    <button class="next">
-      <span>Próximo&nbsp;</span>
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fast-forward-fill" viewBox="0 0 16 16">
-        <path d="M7.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C.713 12.69 0 12.345 0 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
-        <path d="M15.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C8.713 12.69 8 12.345 8 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
-      </svg>
-    </button>
+  <div id="app">
+    <ul class="cards">
+      <gsap-card
+        v-for="(card, index) in cards"
+        :key="index"
+        :number="card.number"
+        :gradient-class="card.gradClass">
+      </gsap-card>
+    </ul>
+    <div class="actions d-flex justify-content-center align-items-center gap-2 font-inter">
+      <button class="prev">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fast-forward-fill" style="rotate: 180deg" viewBox="0 0 16 16">
+          <path d="M7.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C.713 12.69 0 12.345 0 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+          <path d="M15.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C8.713 12.69 8 12.345 8 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+        </svg>
+        <span>&nbsp;Anterior</span>
+      </button>
+      <button class="info" data-bs-toggle="modal" data-bs-target="#infoModal">Info</button>
+      <button class="next">
+        <span>Próximo&nbsp;</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fast-forward-fill" viewBox="0 0 16 16">
+          <path d="M7.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C.713 12.69 0 12.345 0 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+          <path d="M15.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C8.713 12.69 8 12.345 8 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+        </svg>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -104,7 +106,7 @@
     </div>
     
     <div class="mt-3 d-flex flex-column gap-3">
-      <!--      TODO: adicionar propriedades a uma instancia de figurinha para que, apenas em determinada situacao a mensagem ou acao apareça e seja possivel clicar/selecionar para as 3 situações ofertadas a seguir -->
+      <!--      PLANNING: adicionar propriedades a uma instancia de figurinha para que, apenas em determinada situacao a mensagem ou acao apareça e seja possivel clicar/selecionar para as 3 situações ofertadas a seguir -->
       <!-- Se ambos os álbuns possuírem a mesma figurinha -->
       <no-trade-message message="Os dois álbuns possuem esta carta. Não é possível trocá-la."></no-trade-message>
       
@@ -112,7 +114,7 @@
       <no-trade-message message="Nenhum dos álbuns possuem esta carta. Não é possível trocá-la."></no-trade-message>
       
       <!-- Oferece troca, já que 1 álbum tem a figurinha e o outro não -->
-      <!--      TODO: adicionar propriedades a uma instancia de figurinha para que, apenas em determinada situacao a mensagem em relacao a troca -->
+      <!--      PLANNING: adicionar propriedades a uma instancia de figurinha para que, apenas em determinada situacao a mensagem em relacao a troca -->
       <div style="max-width: 300px" class="mx-auto">
         <div class="d-flex flex-column gap-1">
           <button type="button" class="btn btn-primary text-base font-inter">
@@ -161,48 +163,6 @@
 <script src='https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js'></script>
 <script src="./components.js"></script>
 <script src="./script.js"></script>
-
-<script>
-  const modalApp = Vue.createApp({
-    data() {
-      return {
-        album1: {
-          name: 'Álbum #1',
-          missing: 45,
-          progress: 50,
-          teams: [
-            {name: 'XYZ', progress: 85, missing: 3},
-            {name: 'ABC', progress: 90, missing: 1}
-          ]
-        },
-        album2: {
-          name: 'Álbum #2',
-          missing: 12,
-          progress: 80,
-          teams: [
-            {name: 'XYZ', progress: 85, missing: 3},
-            {name: 'ABC', progress: 90, missing: 1}
-          ]
-        },
-        commonStickers: [
-          {number: 1, team: 'ABC'},
-          {number: 10, team: 'DEF'},
-          {number: 5, team: 'XYZ'}
-        ],
-        possibleTrades: [
-          {number: 11, team: 'ABC', from: 'X', to: 'Y', requested: false},
-          {number: 5, team: 'XYZ', from: 'Y', to: 'X', requested: false}
-        ]
-      };
-    }
-  });
-  
-  modalApp.component('album-comparison-component', albumComparisonComponent);
-  modalApp.component('common-stickers-component', commonStickersComponent);
-  modalApp.component('possible-trades-component', possibleTradesComponent);
-  
-  modalApp.mount('#modal-app');
-</script>
 
 </body>
 
