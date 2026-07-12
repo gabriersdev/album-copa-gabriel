@@ -12,11 +12,8 @@ public class Util {
 
     public static void printStringMatrix(String[][] matrix, int printType) {
         for (String[] v : matrix) {
-            if (printType == 3) {
-                System.out.printf(v[0], v[1]);
-            } else {
-                System.out.println("Parâmetro não implementado.");
-            }
+            if (printType == 3) System.out.printf(v[0], v[1]);
+            else System.out.println("Parâmetro não implementado.");
         }
     }
 
@@ -44,22 +41,16 @@ public class Util {
     public static int readPositiveInteger(String errorMessageLetter, String errorMessageNegative) {
         do {
             int value = readInteger(errorMessageLetter);
-            if (value < 0) {
-                System.out.print(errorMessageNegative);
-            } else {
-                return value;
-            }
+            if (value < 0) System.out.print(errorMessageNegative);
+            else return value;
         } while (true);
     }
 
     public static int readIntegerInRange(String errorMessageLetter, String errorMessageInvalid, int min, int max) {
         do {
             int value = readInteger(errorMessageLetter);
-            if (value < min || value > max) {
-                System.out.print(errorMessageInvalid);
-            } else {
-                return value;
-            }
+            if (value < min || value > max) System.out.print(errorMessageInvalid);
+            else return value;
         } while (true);
     }
 }
