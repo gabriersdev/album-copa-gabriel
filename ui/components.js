@@ -76,6 +76,12 @@ const possibleTradesComponent = {
     methods: {
         requestTrade(trade) {
             trade.requested = true;
+            this.$emit('trade', {
+                stickerNumber: trade.number,
+                team: trade.team,
+                fromAlbum: trade.from,
+                toAlbum: trade.to
+            });
         }
     }
 };

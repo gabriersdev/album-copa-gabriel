@@ -11,6 +11,7 @@
     "compile:java:api": "javac -sourcepath src src/Main.java src/Testing.java src/ApiMain.java",
     "test": "npm run compile:java && java -cp src Testing",
     "start:api": "npm run compile:java:api && java -cp src ApiMain",
+    "start:ui": "http-server ./ui -p 4322 -c-1",
     "clean": "node scripts/clean-class-files.js"
   },
   "repository": {
@@ -24,6 +25,7 @@
   },
   "homepage": "https://github.com/gabriersdev/ifmg-hub#readme",
   "devDependencies": {
-    "adm-zip": "^0.5.17"
+    "adm-zip": "^0.5.17",
+    "http-server": "^14.1.1"
   }
 }
