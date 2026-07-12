@@ -238,7 +238,7 @@ a:hover {
 
 /* Magenta para Azul */
 .grad-10 {
-    --card-gradient: linear-gradient(135deg, #c31432 0%, #240b36 100%);
+    --card-gradient: linear-gradient(135deg, #c31432 0%, #af563b 100%);
 }
 
 /* Vermelho Profundo para Roxo Escuro */
