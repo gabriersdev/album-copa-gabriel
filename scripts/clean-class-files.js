@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.join(__dirname, '..');
 
 // Directories to ignore during traversal
-const ignoreDirs = ['node_modules', '.git', '.idea', 'dist-zip', 'assets', 'docs'];
+const ignoreDirs = ['node_modules', '.git', '.idea', 'dist-zip', 'assets', 'docs', 'database'];
 
 function deleteClassFiles(dir) {
   if (!fs.existsSync(dir)) return;
