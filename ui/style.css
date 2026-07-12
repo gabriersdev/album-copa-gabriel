@@ -3,11 +3,15 @@
 }
 
 body {
-    font-family: Inter, sans-serif;
+    font-family: "Inter Tight", "Inter", sans-serif;
     background: #111;
     min-height: 100vh;
     padding: 0;
     margin: 0;
+}
+
+.font-inter {
+    font-family: "Inter", sans-serif;
 }
 
 .gallery {
@@ -62,7 +66,6 @@ button {
     font-weight: 600;
     cursor: pointer;
     line-height: 18px;
-    margin: 1rem;
 }
 
 a {
@@ -146,7 +149,7 @@ a:hover {
 }
 
 .card-footer {
-    transform: rotate(180deg);
+    /*transform: rotate(180deg);*/
 }
 
 /* Textos laterais (GSAP) */
@@ -175,6 +178,7 @@ a:hover {
     font-size: 16rem;
     font-weight: 300;
     line-height: 1;
+    letter-spacing: -0.05em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -238,3 +242,14 @@ a:hover {
 
 /* Vermelho Profundo para Roxo Escuro */
 
+.text-sm, .text-small, .small {
+    font-size: 13px !important;
+}
+
+.text-balance {
+    text-wrap: balance !important;
+}
+
+.text-base {
+    font-size: 16px !important;
+}

@@ -3,19 +3,40 @@ const app = Vue.createApp({
     return {
       // Array de dados iterados pelo Vue para gerar os 10 cards
       cards: [
-        {number: '7', gradClass: 'grad-1'},
-        {number: '6', gradClass: 'grad-2'},
-        {number: '5', gradClass: 'grad-3'},
-        {number: '4', gradClass: 'grad-4'},
-        {number: '3', gradClass: 'grad-5'},
-        {number: '2', gradClass: 'grad-6'},
         {number: '1', gradClass: 'grad-7'},
+        {number: '2', gradClass: 'grad-6'},
+        {number: '3', gradClass: 'grad-5'},
+        {number: '4', gradClass: 'grad-4'},
+        {number: '5', gradClass: 'grad-3'},
+        {number: '6', gradClass: 'grad-2'},
+        {number: '7', gradClass: 'grad-1'},
         {number: '8', gradClass: 'grad-8'},
         {number: '9', gradClass: 'grad-9'},
-        {number: '0', gradClass: 'grad-10'},
+        {number: '10', gradClass: 'grad-1'},
+        {number: '11', gradClass: 'grad-10'},
+        {number: '12', gradClass: 'grad-2'},
+        {number: '13', gradClass: 'grad-3'},
+        {number: '14', gradClass: 'grad-4'},
+        {number: '15', gradClass: 'grad-5'},
+        {number: '16', gradClass: 'grad-6'},
+        {number: '17', gradClass: 'grad-7'},
+        {number: '18', gradClass: 'grad-9'},
+        {number: '19', gradClass: 'grad-10'},
+        {number: '20', gradClass: 'grad-8'},
       ]
     }
   }
+});
+
+// Definição do Componente Vue "no-trade-message"
+app.component('no-trade-message', {
+  props: {
+    message: {
+      type: String,
+      required: true
+    }
+  },
+  template: '#no-trade-message-template'
 });
 
 // Definição do Componente Vue "gsap-card"
@@ -30,22 +51,7 @@ app.component('gsap-card', {
       required: true
     }
   },
-  template: `<li>
-                <div class="card-container" :class="gradientClass">
-                    <div class="card-inner-border"></div>
-                    
-                    <div class="card-header text-gradient">Animate Anything</div>
-                    
-                    <div class="card-side-text side-left text-gradient">GSAP</div>
-                    
-                    <div class="card-center-number text-gradient">{{ number }}</div>
-                    
-                    <div class="card-side-text side-right text-gradient">GSAP</div>
-                    
-                    <div class="card-footer text-gradient">Animate Anything</div>
-                </div>
-                </li>
-            `
+  template: '#gsap-card-template'
 });
 
 // Montar a aplicação no DOM
