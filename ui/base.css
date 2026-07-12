@@ -269,14 +269,14 @@
     --fc-s-min: var(--f-0-min, 21);
     --fc-s-max: var(--f-0-max, 24);
 
-    --fc-m-min: (var(--fc-s-min) *6);
-    --fc-m-max: (var(--fc-s-max) *6);
+    --fc-m-min: calc(var(--fc-s-min) * 6);
+    --fc-m-max: calc(var(--fc-s-max) * 6);
 
-    --fc-l-min: (var(--fc-s-min) *8);
-    --fc-l-max: (var(--fc-s-max) *8);
+    --fc-l-min: calc(var(--fc-s-min) * 8);
+    --fc-l-max: calc(var(--fc-s-max) * 8);
 
-    --fc-xl-min: (var(--fc-s-min) *10);
-    --fc-xl-max: (var(--fc-s-max) *10);
+    --fc-xl-min: calc(var(--fc-s-min) * 10);
+    --fc-xl-max: calc(var(--fc-s-max) * 10);
 
     /* T-shirt sizes */
     --space-s: calc(

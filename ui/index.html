@@ -1,33 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8">
-  <title>Infinite Scrolling Cards with GSAP and ScrollTrigger (continuous snap)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tinder de Álbum da Copa | Troque figurinhas com seus amigos</title>
+  
+  <link rel="icon" href="https://www.jetbrains.com/favicon.ico" type="image/x-icon">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./bootstrap.min.css">
   <link rel='stylesheet' href='./base.css'>
   <link rel="stylesheet" href="./style.css">
-
+  
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
 <div class="gallery">
-  <ul class="cards">
-    <li><img src="https://assets.codepen.io/16327/portrait-number-1.png" alt=""/></li>
-    <li><img src="https://assets.codepen.io/16327/portrait-number-2.png" alt=""/></li>
-    <li><img src="https://assets.codepen.io/16327/portrait-number-3.png" alt=""/></li>
-    <li><img src="https://assets.codepen.io/16327/portrait-number-4.png" alt=""/></li>
-    <li><img src="https://assets.codepen.io/16327/portrait-number-5.png" alt=""/></li>
-    <li><img src="https://assets.codepen.io/16327/portrait-number-1.png" alt=""/></li>
-    <li><img src="https://assets.codepen.io/16327/portrait-number-2.png" alt=""/></li>
-    <li><img src="https://assets.codepen.io/16327/portrait-number-3.png" alt=""/></li>
-    <li><img src="https://assets.codepen.io/16327/portrait-number-4.png" alt=""/></li>
-    <li><img src="https://assets.codepen.io/16327/portrait-number-5.png" alt=""/></li>
+  <ul class="cards" id="app">
+    <gsap-card
+      v-for="(card, index) in cards"
+      :key="index"
+      :number="card.number"
+      :gradient-class="card.gradClass">
+    </gsap-card>
   </ul>
   <div class="actions">
     <button class="prev">Prev</button>
     <button class="next">Next</button>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src='https://unpkg.co/gsap@3/dist/gsap.min.js'></script>
 <script src='https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js'></script>
 <script src="./script.js"></script>
