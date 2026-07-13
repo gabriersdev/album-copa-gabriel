@@ -119,45 +119,10 @@ const app = Vue.createApp({
 });
 
 // Definição do Componente Vue "no-trade-message"
-app.component('no-trade-message', {
-  props: {
-    message: {
-      type: String,
-      required: true
-    }
-  },
-  template: '#no-trade-message-template'
-});
+app.component('no-trade-message', noTradeMessageComponent);
 
 // Definição do Componente Vue "gsap-card"
-app.component('gsap-card', {
-  props: {
-    card: {
-      type: Object,
-      required: true
-    }
-  },
-  data() {
-    return {
-      isTrading: false
-    };
-  },
-  methods: {
-    doTrade(from, to) {
-      this.isTrading = true;
-      this.$emit('trade', {
-        stickerNumber: parseInt(this.card.number),
-        team: this.card.team,
-        fromAlbum: from,
-        toAlbum: to
-      });
-      // The parent will re-fetch data on success which will re-render,
-      // but in case of error we can stop the spinner.
-      setTimeout(() => { this.isTrading = false; }, 2000);
-    }
-  },
-  template: '#gsap-card-template'
-});
+app.component('gsap-card', gsapCardComponent);
 
 app.component('album-comparison-component', albumComparisonComponent);
 app.component('common-stickers-component', commonStickersComponent);
