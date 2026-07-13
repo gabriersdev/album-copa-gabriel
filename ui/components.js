@@ -23,29 +23,30 @@ const albumComparisonComponent = {
 };
 
 const commonStickersComponent = {
-    props: ['commonStickers'],
-    computed: {
-        stickersByTeam() {
-            const grouped = {};
-            for (const sticker of this.commonStickers) {
-                if (!grouped[sticker.team]) {
-                    grouped[sticker.team] = [];
-                }
-                grouped[sticker.team].push(sticker);
-            }
-            return grouped;
+  props: ['commonStickers', 'totalStickers'],
+  computed: {
+    stickersByTeam() {
+      const grouped = {};
+      for (const sticker of this.commonStickers) {
+        if (!grouped[sticker.team]) {
+          grouped[sticker.team] = [];
         }
-    },
-    template: `
+        grouped[sticker.team].push(sticker);
+      }
+      return grouped;
+    }
+  },
+  template: `
         <div class="mb-4">
             <p class="m-0 p-0">
-                <strong>Figurinhas em comum:</strong> <span>{{ commonStickers.length }}</span>
+<!--            TODO: implementar total de figurinhas (pegar do retorno da API: totalStickers) -->
+                <strong>Figurinhas em comum:</strong> <span>{{ commonStickers.length }} de {{ totalStickers }}</span>
             </p>
             <details class="text-small mt-1">
                 <summary class="text-primary">Detalhes</summary>
                 <div class="pt-1">
                     <div v-for="(stickers, team) in stickersByTeam" :key="team" class="mb-2">
-                        <strong>Seleção {{ team }}</strong>
+                        <strong>Seleção do(a) {{ team }}</strong>
                         <ul>
                             <li v-for="sticker in stickers" :key="sticker.number" class="mb-1">
                                 <span>Jogador #{{ sticker.number }}.</span>
@@ -59,8 +60,8 @@ const commonStickersComponent = {
 };
 
 const possibleTradesComponent = {
-    props: ['trades'],
-    template: `
+  props: ['trades'],
+  template: `
         <div class="mb-0">
             <p class="m-0 p-0">
                 <strong>Possíveis trocas:</strong> <span>{{ trades.length }}</span>
@@ -86,15 +87,15 @@ const possibleTradesComponent = {
             </details>
         </div>
     `,
-    methods: {
-        requestTrade(trade) {
-            trade.requested = true;
-            this.$emit('trade', {
-                stickerNumber: trade.number,
-                team: trade.team,
-                fromAlbum: trade.from,
-                toAlbum: trade.to
-            });
-        }
+  methods: {
+    requestTrade(trade) {
+      trade.requested = true;
+      this.$emit('trade', {
+        stickerNumber: trade.number,
+        team: trade.team,
+        fromAlbum: trade.from,
+        toAlbum: trade.to
+      });
     }
+  }
 };

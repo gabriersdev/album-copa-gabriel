@@ -10,6 +10,7 @@ const app = Vue.createApp({
       album1: { name: 'Álbum #1', missing: 0, progress: 0, teams: [] },
       album2: { name: 'Álbum #2', missing: 0, progress: 0, teams: [] },
       commonStickers: [],
+      totalStickers: 0,
       possibleTrades: []
     };
   },
@@ -23,6 +24,7 @@ const app = Vue.createApp({
         const data = await response.json();
         this.selections = data.selections.sort();
         this.currentSelection = data.currentSelection;
+        this.totalStickers = data.totalStickers;
         this.cards = this.mapCards(data.stickers);
         this.reinitGsap();
       } catch (err) {
@@ -71,6 +73,7 @@ const app = Vue.createApp({
         this.album1 = data.album1;
         this.album2 = data.album2;
         this.commonStickers = data.commonStickers;
+        this.totalStickers = data.totalStickers;
         this.possibleTrades = data.possibleTrades;
         console.log("Informações da comparação de álbuns:", data);
       } catch (err) {
