@@ -29,8 +29,8 @@ const app = Vue.createApp({
         console.error("Erro ao carregar dados iniciais:", err);
       }
     },
-    async fetchSelection(selectionName) {
-      if(this.currentSelection === selectionName) return;
+    async fetchSelection(selectionName, force = false) {
+      if (this.currentSelection === selectionName && !force) return;
       this.currentSelection = selectionName;
       try {
         const response = await fetch(`${API_BASE}/selection/${selectionName}`);
@@ -55,7 +55,7 @@ const app = Vue.createApp({
         Swal.fire('Atenção!', 'Digite o nome de uma seleção para pesquisar.', 'warning');
         return;
       }
-      
+
       const found = this.selections.find(s => s.toLowerCase() === query.toLowerCase());
       if (found) {
         this.fetchSelection(found);
@@ -84,11 +84,11 @@ const app = Vue.createApp({
           body: JSON.stringify(tradeReq)
         });
         const result = await response.json();
-        
+
         if (result.success) {
           Swal.fire('Sucesso!', result.message, 'success');
           // Reload everything
-          this.fetchSelection(this.currentSelection);
+          this.fetchSelection(this.currentSelection, true);
           this.fetchComparison();
         } else {
           Swal.fire('Erro!', result.message, 'error');
@@ -166,7 +166,7 @@ const vm = app.mount('#app');
 // Expose vm to global so the Info button outside the #app can trigger fetchComparison,
 // wait, we can just attach it in HTML or here.
 document.querySelector(".info").addEventListener("click", () => {
-    vm.fetchComparison();
+  vm.fetchComparison();
 });
 
 
@@ -178,17 +178,17 @@ function initGsap() {
   if (trigger) trigger.kill();
   if (scrub) scrub.kill();
   if (seamlessLoop) seamlessLoop.kill();
-  
+
   gsap.registerPlugin(ScrollTrigger);
-  gsap.to(".card-container", {opacity: 1, delay: 0.1});
-  
+  gsap.to(".card-container", { opacity: 1, delay: 0.1 });
+
   let iteration = 0;
   const spacing = 0.1;
   const snap = gsap.utils.snap(spacing);
   const cardsElements = gsap.utils.toArray('.cards li');
-  
+
   if (cardsElements.length === 0) return;
-  
+
   seamlessLoop = buildSeamlessLoop(cardsElements, spacing);
   scrub = gsap.to(seamlessLoop, {
     totalTime: 0,
@@ -196,7 +196,7 @@ function initGsap() {
     ease: "power3",
     paused: true
   });
-  
+
   trigger = ScrollTrigger.create({
     start: 0,
     onUpdate(self) {
@@ -213,7 +213,7 @@ function initGsap() {
     end: "+=3000",
     pin: ".gallery"
   });
-  
+
   function wrapForward(trigger) {
     iteration++;
     trigger.wrapping = true;
@@ -231,13 +231,13 @@ function initGsap() {
     trigger.scroll(trigger.end - 1);
   }
 
-  window.scrubTo = function(totalTime) {
+  window.scrubTo = function (totalTime) {
     let progress = (totalTime - seamlessLoop.duration() * iteration) / seamlessLoop.duration();
     if (progress > 1) wrapForward(trigger);
     else if (progress < 0) wrapBackward(trigger);
     else trigger.scroll(trigger.start + progress * (trigger.end - trigger.start));
   };
-  
+
   // Re-attach listeners to next/prev since the DOM might be the same but we need the new scrub reference
   document.querySelector(".next").onclick = () => window.scrubTo(scrub.vars.totalTime + spacing);
   document.querySelector(".prev").onclick = () => window.scrubTo(scrub.vars.totalTime - spacing);
@@ -247,7 +247,7 @@ function buildSeamlessLoop(items, spacing) {
   let overlap = Math.ceil(1 / spacing),
     startTime = items.length * spacing + 0.5,
     loopTime = (items.length + overlap) * spacing + 1,
-    rawSequence = gsap.timeline({paused: true}),
+    rawSequence = gsap.timeline({ paused: true }),
     seamlessLoop = gsap.timeline({
       paused: true,
       repeat: -1,
@@ -258,24 +258,24 @@ function buildSeamlessLoop(items, spacing) {
     l = items.length + overlap * 2,
     time = 0,
     i, index, item;
-  
-  gsap.set(items, {xPercent: 400, opacity: 0, scale: 0});
-  
+
+  gsap.set(items, { xPercent: 400, opacity: 0, scale: 0 });
+
   for (i = 0; i < l; i++) {
     index = i % items.length;
     item = items[index];
     time = i * spacing;
-    rawSequence.fromTo(item, {scale: 0, opacity: 0}, {scale: 1, opacity: 1, zIndex: 100, duration: 0.5, yoyo: true, repeat: 1, ease: "power1.in", immediateRender: false}, time)
-      .fromTo(item, {xPercent: 400}, {xPercent: -400, duration: 1, ease: "none", immediateRender: false}, time);
+    rawSequence.fromTo(item, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, zIndex: 100, duration: 0.5, yoyo: true, repeat: 1, ease: "power1.in", immediateRender: false }, time)
+      .fromTo(item, { xPercent: 400 }, { xPercent: -400, duration: 1, ease: "none", immediateRender: false }, time);
     i <= items.length && seamlessLoop.add("label" + i, time);
   }
-  
+
   rawSequence.time(startTime);
   seamlessLoop.to(rawSequence, {
     time: loopTime,
     duration: loopTime - startTime,
     ease: "none"
-  }).fromTo(rawSequence, {time: overlap * spacing + 1}, {
+  }).fromTo(rawSequence, { time: overlap * spacing + 1 }, {
     time: startTime,
     duration: startTime - (overlap * spacing + 1),
     immediateRender: false,

@@ -259,3 +259,10 @@ summary::marker {
     list-style-type: none;
     content: "+ ";
 }
+
+.swal2-html-container {
+    font-family: "Inter", sans-serif;
+    font-size: 1rem !important;
+    line-height: 1.25;
+    text-wrap: balance !important;
+}

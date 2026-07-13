@@ -10,9 +10,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,wght@0,100..800;1,100..800&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="./bootstrap.min.css">
   <link rel='stylesheet' href='./base.css'>
@@ -35,110 +33,113 @@
 
 <!-- Se não for o caso, exibir as funcionalidades da aplicação! -->
 <div id="app">
-<div class="gallery">
-  <div class="mx-auto w-100">
-    <hgroup class="d-flex justify-content-center align-items-center mt-5">
-      <div class="d-flex justify-content-center align-items-center flex-column">
-        <span class="text-small font-inter">Seleção atual</span>
-        <div class="d-flex justify-content-center align-items-center gap-3 flex-wrap">
-          <h2 class="fs-3 fw-semibold p-0 mb-1 mt-0">{{ currentSelection }}</h2>
-          <div class="dropdown">
-            <button class="btn bg-transparent border-0 shadow-none p-0 m-0 font-inter text-small dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+  <div class="gallery">
+    <!--    TODO: separar os templates que estão usados aqui no components.js para compartimentar melhor lá -->
+    <div class="mx-auto w-100">
+      <hgroup class="d-flex justify-content-center align-items-center mt-5">
+        <div class="d-flex justify-content-center align-items-center flex-column">
+          <span class="text-small font-inter">Seleção atual</span>
+          <div class="d-flex justify-content-center align-items-center gap-3 flex-wrap">
+            <h2 class="fs-3 fw-semibold p-0 mb-1 mt-0">
+              <span :class="currentSelection.toLowerCase() === 'argentina' ? 'text-decoration-line-through' : ''">
+                {{ currentSelection }}
+              </span>
+            </h2>
+            <div class="dropdown">
+              <button class="btn bg-transparent border-0 shadow-none p-0 m-0 font-inter text-small dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
               <span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat mb-1" viewBox="0 0 16 16">
                 <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
                 <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
                 </svg>
               </span>
-              <span>&nbsp;Trocar</span>
-            </button>
-            
-            <div class="dropdown-menu overflow-y-scroll min-vh-100" style="min-width: 350px">
-              <!-- TODO: implementar esta pesquisa e usar SweetAlert como feedback para os alerts. Lembrar de que alguns tipos de interações com o dropdown causam o fechamento dele. Por isso precisa de tratamento -->
-              <div class="form-group p-3">
-                <label class="form-label font-inter">
-                  <span class="text-small text-body-secondary">Pesquise por uma seleção</span>
-                  <div class="d-flex justify-content-center align-items-center gap-2">
-                    <input class="form-control mt-1 border-0 bg-body-secondary shadow-none p-2 rounded-1" placeholder="Brasil" list="selections-options" style="border: 0" v-model="searchQuery" @keydown.enter.prevent="searchSelection">
-                    <button class="btn btn-primary btn-sm text-small d-flex align-items-center justify-content-center gap-1" type="button" @click="searchSelection">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                      </svg>
-                      <span>Pesquisar</span>
-                    </button>
-                  </div>
-                  <datalist id="selections-options">
-                    <option v-for="sel in selections" :key="sel" :value="sel">
-                      {{sel}}
-                    </option>
-                  </datalist>
-                </label>
-              </div>
+                <span>&nbsp;Trocar</span>
+              </button>
               
-              <div class="font-inter px-3">
-                <span class="text-small text-body-secondary">Ou selecione uma</span>
+              <div class="dropdown-menu overflow-y-scroll min-vh-100" style="min-width: 350px">
+                <div class="form-group p-3">
+                  <label class="form-label font-inter">
+                    <span class="text-small text-body-secondary">Pesquise por uma seleção</span>
+                    <form class="d-flex justify-content-center align-items-center gap-2" @submit.prevent="searchSelection">
+                      <input class="form-control mt-1 border-0 bg-body-secondary shadow-none p-2 rounded-1 text-small" placeholder="Digite a seleção e clique em Pesquisar" list="selections-options" style="border: 0" v-model="searchQuery">
+                      <button class="btn btn-primary btn-sm text-small d-flex align-items-center justify-content-center gap-1" type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                        </svg>
+                        <span>Pesquisar</span>
+                      </button>
+                    </form>
+                    <datalist id="selections-options">
+                      <option v-for="sel in selections" :key="sel" :value="sel">
+                        {{sel}}
+                      </option>
+                    </datalist>
+                  </label>
+                </div>
+                
+                <div class="font-inter px-3">
+                  <span class="text-small text-body-secondary">Ou selecione uma</span>
+                </div>
+                <ul class="font-inter text-base" style="list-style: none; padding: 0">
+                  <li v-for="sel in selections" :key="sel">
+                    <a class="dropdown-item" href="#" @click.prevent="fetchSelection(sel)">{{ sel }}</a>
+                  </li>
+                </ul>
               </div>
-              <ul class="font-inter text-base" style="list-style: none; padding: 0">
-                <li v-for="sel in selections" :key="sel">
-                  <a class="dropdown-item" href="#" @click.prevent="fetchSelection(sel)">{{ sel }}</a>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
-      </div>
-    </hgroup>
-  </div>
-  <div>
-    <ul class="cards">
-      <gsap-card v-for="(card, index) in cards" :key="index" :card="card" @trade="tradeSticker">
-      </gsap-card>
-    </ul>
-    <div class="actions d-flex justify-content-center align-items-center gap-2 font-inter">
-      <button class="prev">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-             class="bi bi-fast-forward-fill" style="rotate: 180deg" viewBox="0 0 16 16">
-          <path
-            d="M7.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C.713 12.69 0 12.345 0 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
-          <path
-            d="M15.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C8.713 12.69 8 12.345 8 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
-        </svg>
-        <span>&nbsp;Anterior</span>
-      </button>
-      <button class="info" data-bs-toggle="modal" data-bs-target="#infoModal">Info</button>
-      <button class="next">
-        <span>Próximo&nbsp;</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-             class="bi bi-fast-forward-fill" viewBox="0 0 16 16">
-          <path
-            d="M7.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C.713 12.69 0 12.345 0 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
-          <path
-            d="M15.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C8.713 12.69 8 12.345 8 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
-        </svg>
-      </button>
+      </hgroup>
     </div>
+    <div>
+      <ul class="cards">
+        <gsap-card v-for="(card, index) in cards" :key="index" :card="card" @trade="tradeSticker">
+        </gsap-card>
+      </ul>
+      <div class="actions d-flex justify-content-center align-items-center gap-2 font-inter">
+        <button class="prev">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+               class="bi bi-fast-forward-fill" style="rotate: 180deg" viewBox="0 0 16 16">
+            <path
+              d="M7.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C.713 12.69 0 12.345 0 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+            <path
+              d="M15.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C8.713 12.69 8 12.345 8 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+          </svg>
+          <span>&nbsp;Anterior</span>
+        </button>
+        <button class="info" data-bs-toggle="modal" data-bs-target="#infoModal">Info</button>
+        <button class="next">
+          <span>Próximo&nbsp;</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+               class="bi bi-fast-forward-fill" viewBox="0 0 16 16">
+            <path
+              d="M7.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C.713 12.69 0 12.345 0 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+            <path
+              d="M15.596 7.304a.802.802 0 0 1 0 1.392l-6.363 3.692C8.713 12.69 8 12.345 8 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
-</div>
-
-<!-- Modal de Comparação de Álbuns moved inside #app -->
-<div class="modal fade font-inter" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header border-bottom border-secondary">
-        <h5 class="modal-title fs-3 fw-medium text-primary" id="infoModalLabel">Comparação de Álbuns</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body text-start text-balance text-base">
-        <!-- As informações agora são carregadas nativamente -->
-        <!--            TODO: as informações continuam a não aparecer. Por favor verique e exiba todas no console do navegador -->
-        <album-comparison-component :album="album1"></album-comparison-component>
-        <album-comparison-component :album="album2"></album-comparison-component>
-        <common-stickers-component :common-stickers="commonStickers"></common-stickers-component>
-        <possible-trades-component :trades="possibleTrades" @trade="tradeSticker"></possible-trades-component>
-      </div>
-      <div class="modal-footer border-top border-secondary">
-        <button type="button" class="btn btn-primary text-base" data-bs-dismiss="modal">Fechar</button>
+  
+  <!-- Modal de Comparação de Álbuns moved inside #app -->
+  <div class="modal fade font-inter" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-bottom border-secondary">
+          <h5 class="modal-title fs-3 fw-medium text-primary" id="infoModalLabel">Comparação de Álbuns</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start text-balance text-base">
+          <!-- As informações agora são carregadas nativamente -->
+          <album-comparison-component :album="album1"></album-comparison-component>
+          <album-comparison-component :album="album2"></album-comparison-component>
+          <common-stickers-component :common-stickers="commonStickers"></common-stickers-component>
+          <possible-trades-component :trades="possibleTrades" @trade="tradeSticker"></possible-trades-component>
+        </div>
+        <div class="modal-footer border-top border-secondary">
+          <button type="button" class="btn btn-primary text-base" data-bs-dismiss="modal">Fechar</button>
+        </div>
       </div>
     </div>
   </div>
@@ -150,13 +151,11 @@
   <div class="text-base text-white text-balance">
     <p class="">
         <span class="text-danger d-inline-flex align-items-center justify-content-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
-               viewBox="0 0 16 16">
-            <path
-              d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
           </svg>
         </span>&nbsp;
-      <span class="font-inter">{{ message }}</span>
+      <span class="font-inter lh-base text-danger-emphasis">{{ message }}</span>
     </p>
   </div>
 </template>
@@ -170,28 +169,36 @@
       </div>
       <div class="card-center-number text-gradient">{{card.number}}</div>
       <div class="card-footer text-gradient">
-        <span class="d-block font-inter">{{card.team}}</span>
+        <p class="d-block font-inter m-0 p-0">
+          <span :class="(card.team.toLowerCase() === 'argentina' ? 'text-decoration-line-through ' : '')">
+            {{card.team}}
+          </span>
+        </p>
       </div>
     </div>
     
     <div class="mt-3 d-flex flex-column gap-3">
       <!-- Se ambos os álbuns possuírem a mesma figurinha -->
-      <no-trade-message v-if="card.album1Has && card.album2Has"
-                        message="Os dois álbuns possuem esta carta. Não é possível trocá-la."></no-trade-message>
+      <no-trade-message v-if="card.album1Has && card.album2Has" message="Os dois álbuns possuem esta carta. Não é possível trocá-la."></no-trade-message>
       
       <!-- Se nenhum dos álbums possuírem a figurinha -->
-      <no-trade-message v-else-if="!card.album1Has && !card.album2Has"
-                        message="Nenhum dos álbuns possuem esta carta. Não é possível trocá-la."></no-trade-message>
+      <no-trade-message v-else-if="!card.album1Has && !card.album2Has" message="Nenhum dos álbuns possuem esta carta. Não é possível trocá-la."></no-trade-message>
       
       <!-- Oferece troca, já que 1 álbum tem a figurinha e o outro não e possui duplicata -->
-      <div v-else-if="(card.album1IsDuplicate && !card.album2Has) || (card.album2IsDuplicate && !card.album1Has)"
-           style="max-width: 300px" class="mx-auto">
+      <div
+        v-else-if="(card.album1IsDuplicate && !card.album2Has) || (card.album2IsDuplicate && !card.album1Has)"
+        style="max-width: 300px" class="mx-auto"
+      >
         <div class="d-flex flex-column gap-1">
-          <button type="button" class="btn btn-primary text-base font-inter"
-                  @click="doTrade(card.album1IsDuplicate ? 'Álbum #1' : 'Álbum #2', card.album1IsDuplicate ? 'Álbum #2' : 'Álbum #1')"
-                  :disabled="isTrading">
-              <span v-if="!isTrading" class="d-block">Transferir do {{ card.album1IsDuplicate ? 'Álbum #1' : 'Álbum #2'
-                }}</span>
+          <button
+            type="button"
+            class="btn btn-primary text-base font-inter"
+            @click="doTrade(card.album1IsDuplicate ? 'Álbum #1' : 'Álbum #2', card.album1IsDuplicate ? 'Álbum #2' : 'Álbum #1')"
+            :disabled="isTrading"
+          >
+            <span v-if="!isTrading" class="d-block">
+              Transferir do {{ card.album1IsDuplicate ? 'Álbum #1' : 'Álbum #2' }}
+            </span>
             <div v-else class="d-flex align-items-center justify-content-center gap-2">
               <div class="spinner-border text-dark spinner-border-sm" style="border-width: 3px" role="status">
                 <span class="visually-hidden">Trocando...</span>
@@ -199,14 +206,14 @@
               <span class="d-block">Trocando...</span>
             </div>
           </button>
-          <span class="text-small d-inline-block text-balance">O {{ card.album1IsDuplicate ? 'Álbum #1' : 'Álbum #2'
-            }} possui mais de uma desta carta, portanto é possível transferir.</span>
+          <span class="text-small d-inline-block text-balance font-inter">
+            O {{ card.album1IsDuplicate ? 'Álbum #1' : 'Álbum #2' }} possui mais de uma desta carta, portanto é possível transferir.
+          </span>
         </div>
       </div>
       
       <!-- Nao possui repetida para trocar -->
-      <no-trade-message v-else
-                        message="Um dos álbuns possui esta carta, mas não tem repetidas para trocar."></no-trade-message>
+      <no-trade-message v-else message="Um dos álbuns possui esta carta, mas não tem repetidas para trocar."></no-trade-message>
     </div>
   </li>
 </template>

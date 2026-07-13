@@ -24,6 +24,18 @@ const albumComparisonComponent = {
 
 const commonStickersComponent = {
     props: ['commonStickers'],
+    computed: {
+        stickersByTeam() {
+            const grouped = {};
+            for (const sticker of this.commonStickers) {
+                if (!grouped[sticker.team]) {
+                    grouped[sticker.team] = [];
+                }
+                grouped[sticker.team].push(sticker);
+            }
+            return grouped;
+        }
+    },
     template: `
         <div class="mb-4">
             <p class="m-0 p-0">
@@ -32,10 +44,11 @@ const commonStickersComponent = {
             <details class="text-small mt-1">
                 <summary class="text-primary">Detalhes</summary>
                 <div class="pt-1">
-                    <div>
+                    <div v-for="(stickers, team) in stickersByTeam" :key="team" class="mb-2">
+                        <strong>Seleção {{ team }}</strong>
                         <ul>
-                            <li v-for="sticker in commonStickers" class="mb-1">
-                                <span>Jogador #{{ sticker.number }} - Seleção {{ sticker.team }}.</span>
+                            <li v-for="sticker in stickers" :key="sticker.number" class="mb-1">
+                                <span>Jogador #{{ sticker.number }}.</span>
                             </li>
                         </ul>
                     </div>
@@ -58,7 +71,7 @@ const possibleTradesComponent = {
                     <div>
                         <ul>
                             <li v-for="trade in trades" class="mb-1">
-                                <span>Jogador #{{ trade.number }} - Seleção {{ trade.team }} do Album {{ trade.from }} para o Album {{ trade.to }}.&nbsp;</span>
+                                <span>Jogador #{{ trade.number }} - Seleção {{ trade.team }} do {{ trade.from }} para o {{ trade.to }}.&nbsp;</span>
                                 <button class="fw-normal text-small border-0 p-0 m-0 bg-transparent text-primary"
                                         @click="requestTrade(trade)"
                                         :disabled="trade.requested"
