@@ -12,6 +12,7 @@
     "test": "npm run compile:java && java -cp src Testing",
     "start:api": "npm run compile:java:api && java -cp src ApiMain",
     "start:ui": "http-server ./ui -p 4322 -c-1",
+    "start:all": "npm run start:api && npm run start:ui",
     "clean": "node scripts/clean-class-files.js"
   },
   "repository": {

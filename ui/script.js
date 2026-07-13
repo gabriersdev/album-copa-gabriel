@@ -200,10 +200,29 @@ function initGsap() {
   }
 
   window.scrubTo = function (totalTime) {
-    let progress = (totalTime - seamlessLoop.duration() * iteration) / seamlessLoop.duration();
-    if (progress > 1) wrapForward(trigger);
-    else if (progress < 0) wrapBackward(trigger);
-    else trigger.scroll(trigger.start + progress * (trigger.end - trigger.start));
+    let dur = seamlessLoop.duration();
+    let progress = (totalTime - dur * iteration) / dur;
+    
+    if (progress > 1) {
+      iteration++;
+      progress -= 1;
+    } else if (progress < 0) {
+      iteration--;
+      if (iteration < 0) {
+        iteration = 9;
+        seamlessLoop.totalTime(seamlessLoop.totalTime() + dur * 10);
+      }
+      progress += 1;
+    }
+    
+    let targetScroll = trigger.start + progress * (trigger.end - trigger.start);
+    trigger.wrapping = true;
+    trigger.scroll(targetScroll);
+    
+    scrub.vars.totalTime = snap((iteration + progress) * dur);
+    scrub.invalidate().restart();
+    
+    setTimeout(() => { trigger.wrapping = false; }, 50);
   };
 
   // Re-attach listeners to next/prev since the DOM might be the same but we need the new scrub reference
