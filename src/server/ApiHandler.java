@@ -187,6 +187,10 @@ public class ApiHandler implements HttpHandler {
         }
         sb.append("],");
 
+        sb.append("\"totalStickers\": [");
+        sb.append(numTeams * numPlayers);
+        sb.append("],");
+
         sb.append("\"possibleTrades\": [");
         for (int i = 0; i < trades.size(); i++) {
             sb.append(trades.get(i));
@@ -277,7 +281,7 @@ public class ApiHandler implements HttpHandler {
         // Sticker destSticker = destTeam.getSticker(playerIndex);
 
         if (!sourceSticker.hasRepeated()) {
-            return "{\"success\": false, \"message\": \"Erro: A troca não pôde ser realizada. O álbum de origem não possui esta figurinha como duplicata.\"}";
+            return "{\"success\": false, \"message\": \"Erro: A troca não pôde ser realizada. O álbum de origem não possui esta figurinha como duplicada.\"}";
         }
 
         sourceTeam.removeStickerQuantity(playerIndex, 1);
