@@ -146,6 +146,6 @@ Este documento descreve os dados, funções e informações que o frontend esper
 ```json
 {
   "success": false,
-  "message": "Erro: A troca não pôde ser realizada. O álbum de origem não possui esta figurinha como duplicata."
+  "message": "Erro: A troca não pôde ser realizada. O álbum de origem não possui esta figurinha como duplicada."
 }
 ```
