@@ -159,15 +159,11 @@ public class Controller {
     }
 
     public static void nextStep() {
-        System.out.printf("%n%s%n", Util.repeatString(".", 30));
+        System.out.printf("%n%s%n", Util.repeatString("-", 30));
         if (album1 != null) albumService.printSummary(album1);
+        if (album2 != null) albumService.printSummary(album2);
 
-        if (album2 != null) {
-            System.out.printf("%n%n");
-            albumService.printSummary(album2);
-        }
-
-        System.out.printf("%n%s%n", Util.repeatString(".", 30));
+        System.out.printf("%n%s%n", Util.repeatString("-", 30));
         System.out.printf("%nO que deseja fazer agora?%n");
 
         Util.printStringArray(new String[]{

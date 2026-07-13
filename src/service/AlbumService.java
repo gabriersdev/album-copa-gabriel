@@ -16,15 +16,11 @@ public class AlbumService {
             totals[i] = team.getTotalStickers();
         }
 
-        System.out.printf("Álbum %d: %d figurinhas %n[", album.getId(), total);
+        System.out.printf("%nÁlbum %d: %d figurinhas %n", album.getId(), total);
 
         // Impressão agradável
-        for (int i = 0; i < numTeams; i++) {
-            System.out.printf("%d %s", totals[i], album.getTeam(i).getName());
-            if (i < numTeams - 1) System.out.print(" | ");
-        }
-
-        System.out.print("]");
+        for (int i = 0; i < numTeams; i++) System.out.printf("+ %d da seleção do(a) %s%n", totals[i], album.getTeam(i).getName());
+        System.out.println();
     }
 
     public void printDetails(Album album) {
@@ -65,32 +61,22 @@ public class AlbumService {
             System.out.println();
         }
 
-        System.out.printf("%nFigurinhas repetidas: ");
-        boolean comma1 = false;
+        System.out.printf("%nFigurinhas repetidas: %n");
         for (int i = 0; i < numTeams; i++) {
             Team team = album.getTeam(i);
             for (int j = 0; j < cols; j++) {
-                if (team.getSticker(j).hasRepeated()) {
-                    if (comma1) System.out.print(", ");
-                    System.out.printf("%d figurinhas de J%d (%s)", team.getSticker(j).getRepeatedCount(), j + 1, team.getName());
-                    comma1 = true;
-                }
+                if (team.getSticker(j).hasRepeated()) System.out.printf("- %d figurinhas do jogador #%d (%s) %n", team.getSticker(j).getRepeatedCount(), j + 1, team.getName());
             }
         }
 
-        System.out.printf("%nFigurinhas que faltam: ");
-        boolean comma2 = false;
+        System.out.printf("%nFigurinhas que faltam: %n");
         for (int i = 0; i < numTeams; i++) {
             Team team = album.getTeam(i);
             for (int j = 0; j < cols; j++) {
-                if (team.getSticker(j).isMissing()) {
-                    if (comma2) System.out.print(", ");
-                    System.out.printf("J%d (%s)", j + 1, team.getName());
-                    comma2 = true;
-                }
+                if (team.getSticker(j).isMissing()) System.out.printf("- Jogador #%d (%s) %n", j + 1, team.getName());
             }
         }
 
-        System.out.printf("%n%n%n");
+        // System.out.printf("%n%n%n");
     }
 }
