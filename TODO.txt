@@ -1,0 +1,4 @@
+- Substituir os componentes que estão sendo estilizados com position:absolute por flexblox ou outras estilizações "mais seguras".
+- Re-estilizar os cards e definir backgrounds.
+- Re-estilizar e refinar estilos dos botões da UI - padronizar.
+- Ordenar os times na exibição de informações sobre a comparação dos álbuns.
