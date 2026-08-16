@@ -89,9 +89,11 @@ const gsapCardComponent = {
                 <span class="d-block">Trocando...</span>
               </div>
             </button>
-            <span class="text-small d-inline-block text-balance font-inter">
-              O {{ card.album1IsDuplicate ? 'Álbum #1' : 'Álbum #2' }} possui mais de uma desta carta, portanto é possível transferir.
-            </span>
+            <div class="d-none">
+              <span class="text-small d-inline-block text-balance font-inter">
+                O {{ card.album1IsDuplicate ? 'Álbum #1' : 'Álbum #2' }} possui mais de uma desta carta, portanto é possível transferir.
+              </span>
+            </div>
           </div>
         </div>
         

@@ -34,8 +34,8 @@
 <!-- Se não for o caso, exibir as funcionalidades da aplicação! -->
 <div id="app">
   <div class="gallery">
-    <div class="mx-auto w-100">
-      <hgroup class="d-flex justify-content-center align-items-center mt-5">
+    <div class="mx-auto w-100 flex-shrink-0" style="z-index: 10;">
+      <hgroup class="d-flex justify-content-center align-items-center mt-3 mt-md-5">
         <div class="d-flex justify-content-center align-items-center flex-column">
           <span class="text-small font-inter">Seleção atual</span>
           <div class="d-flex justify-content-center align-items-center gap-3 flex-wrap">
@@ -90,11 +90,13 @@
         </div>
       </hgroup>
     </div>
-    <div>
-      <ul class="cards">
+    <div class="flex-grow-1 d-flex flex-column justify-content-center align-items-center position-relative w-100">
+      <ul class="cards m-0 p-0">
         <gsap-card v-for="(card, index) in cards" :key="index" :card="card" @trade="tradeSticker">
         </gsap-card>
       </ul>
+    </div>
+    <div class="flex-shrink-0 pb-4 pt-2 w-100" style="z-index: 10;">
       <div class="actions d-flex justify-content-center align-items-center gap-2 font-inter">
         <button class="prev">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
